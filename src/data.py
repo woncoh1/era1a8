@@ -3,7 +3,7 @@ import torchvision
 
 
 def get_dataset(
-    transform:dict,
+    transform:dict[str, torchvision.transforms],
 ) -> dict[str, torchvision.datasets]:
     return {
         'train': torchvision.datasets.CIFAR10(
@@ -23,7 +23,7 @@ def get_dataset(
 
 def get_dataloader(
     dataset:torchvision.datasets,
-    params:dict,
+    params:dict[str, bool|int],
 ) -> dict[str, torch.utils.data.DataLoader]:
     return {
         'train': torch.utils.data.DataLoader(dataset['train'], **params),
