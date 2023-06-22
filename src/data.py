@@ -2,6 +2,13 @@ import torch
 import torchvision
 
 
+# Pixel statistics of all (train + test) CIFAR-10 images
+# https://github.com/kuangliu/pytorch-cifar/blob/master/main.py
+AVG = (0.4914, 0.4822, 0.4465) # Mean
+STD = (0.2023, 0.1994, 0.2010) # Standard deviation
+CHW = (3, 32, 32) # Channel, height, width
+
+
 def get_dataset(
     transform:dict[str, torchvision.transforms],
 ) -> dict[str, torchvision.datasets]:
