@@ -2,6 +2,13 @@ import torch
 from tqdm.auto import tqdm
 
 
+def count_correct_predictions(
+    predictions:torch.Tensor,
+    labels:torch.Tensor,
+) -> int:
+    return predictions.argmax(dim=1).eq(labels).sum().item()
+
+
 def train_step(
     device:torch.device,
     loader:torch.utils.data.DataLoader,
@@ -114,10 +121,3 @@ def train(
         results['test_loss'].append(test_loss)
         results['test_acc'].append(test_acc*100)
     return results
-
-
-def count_correct_predictions(
-    predictions:torch.Tensor,
-    labels:torch.Tensor,
-) -> int:
-    return predictions.argmax(dim=1).eq(labels).sum().item()

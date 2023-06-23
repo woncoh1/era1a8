@@ -3,11 +3,18 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 
 
-def initialize_weights(layer: nn.Module) -> None:
+def initialize_weights(
+    layer: nn.Module,
+) -> None:
+    """Randomly initialize weights.
+    https://github.com/parrotletml/era_session_seven/blob/main/mnist/utils.py#L51-L63
+    """
     if isinstance(layer, nn.Conv2d):
         nn.init.xavier_uniform_(layer.weight.data)
+        if m.bias: nn.init.constant_(layer.bias.data, 0)
     elif isinstance(layer, nn.BatchNorm2d) or isinstance(layer, nn.GroupNorm):
         nn.init.constant_(layer.weight.data, 1)
+        nn.init.constant_(layer.bias.data, 0)
 
 
 def get_incorrect_predictions(
@@ -16,7 +23,9 @@ def get_incorrect_predictions(
     model:torch.nn.Module,
     criterion:torch.nn.functional,
 ) -> list:
-    """Get all incorrect predictions."""
+    """Get all incorrect predictions.
+    https://github.com/parrotletml/era_session_seven/blob/main/mnist/utils.py#L111-L135
+    """
     model.eval()
     incorrects = []
     with torch.no_grad():
@@ -46,7 +55,9 @@ def find_lr(
     final_value:float=10.,
     beta: float=0.98,
 ) -> tuple[list[float], list[float]]:
-    """https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html"""
+    """Compute loss values for each learning rate value.
+    https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html
+    """
     trn_loader = train_loader
     net = model
     num = len(trn_loader) - 1
@@ -88,7 +99,9 @@ def find_lr(
     return lrs, losses
 
 
-def plot_batch(dataloader: torch.utils.data.DataLoader) -> None:
+def plot_batch(
+    dataloader: torch.utils.data.DataLoader,
+) -> None:
     """Plot sample images from a batch."""
     batch_data, batch_label = next(iter(dataloader))
     fig = plt.figure()
@@ -101,8 +114,13 @@ def plot_batch(dataloader: torch.utils.data.DataLoader) -> None:
         plt.yticks([])
 
 
-def plot_lr(lrs:list[float], losses:list[float]) -> None:
-    """Plot loss vs learning rate for the learning rate finder."""
+def plot_lr(
+    lrs:list[float],
+    losses:list[float],
+) -> None:
+    """Plot loss vs learning rate for the learning rate finder.
+    https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html
+    """
     x = lrs
     y = losses
     plt.plot(x, y)
@@ -118,7 +136,10 @@ def plot_lr(lrs:list[float], losses:list[float]) -> None:
     plt.show()
 
 
-def plot_curves(results: dict[str, list[float]], epoch:int) -> None:
+def plot_curves(
+    results: dict[str, list[float]],
+    epoch:int,
+) -> None:
     """Plot training and test losses and accuracies."""
     epochs = range(1, epoch+1)
     fig, axs = plt.subplots(1, 2, figsize=(10, 5))
@@ -146,12 +167,13 @@ def plot_incorrect_predictions(
     classes:list,
     count:int=10,
 ) -> None:
-    """Plot incorrect predictions."""
+    """Plot incorrect predictions.
+    https://github.com/parrotletml/era_session_seven/blob/main/mnist/utils.py#L111-L135
+    """
     print(f'Total Incorrect Predictions {len(predictions)}')
     if not count % 5 == 0:
         print("Count should be multiple of 10")
         return
-    # classes = list(range(len(classes)))
     fig = plt.figure(figsize=(10, 5))
     for i, (d, t, p, o) in enumerate(predictions):
         ax = fig.add_subplot(int(count/5), 5, i + 1, xticks=[], yticks=[])

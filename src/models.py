@@ -2,16 +2,16 @@ import torch
 import torch.nn as nn
 
 
-def norm(
+def norm( # Normalization layer: batch, layer, or group
     n:str, # Normalization type
     o:int, # num_channels
     g:int, # num_groups
 ) -> nn.modules:
-    NORMS = ['bn', 'gn', 'ln',]
+    NORMS = ['bn', 'ln', 'gn',]
     assert n in NORMS, f"n should be one of {NORMS}"
     if n == 'bn': return nn.BatchNorm2d(o)
-    if n == 'gn': return nn.GroupNorm(g, o)
     if n == 'ln': return nn.GroupNorm(1, o)
+    if n == 'gn': return nn.GroupNorm(g, o)
 
 
 def conv( # Convolution layer: 3x3 convolution to extract features
@@ -73,7 +73,7 @@ class SkipBlock(nn.Module):
         d:float, # Dropout rate
         down=False, # Downsampling
         skip=True, # Skip connection
-    ):
+    ) -> None:
         super().__init__()
         self.down = down
         self.skip = skip

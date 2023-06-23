@@ -8,16 +8,16 @@ AVG = (0.4914, 0.4822, 0.4465) # Mean
 STD = (0.2023, 0.1994, 0.2010) # Standard deviation
 CHW = (3, 32, 32) # Channel, height, width
 CLASSES = [
-    'airplane',							
+    'airplane',
     'automobile',
     'bird',
-    'cat',										
-    'deer',									
-    'dog',									
-    'frog',									
-    'horse',									
-    'ship',										
-    'truck',		
+    'cat',
+    'deer',
+    'dog',
+    'frog',
+    'horse',
+    'ship',
+    'truck',
 ]
 
 
