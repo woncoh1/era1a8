@@ -102,7 +102,7 @@ class Net(nn.Module):
         self.tran1 = SkipBlock(8, 8, norm, grps, drop, down=True)
         self.conv3 = SkipBlock(8, 8, norm, grps, drop)
         self.conv4 = SkipBlock(8, 16, norm, grps, drop)
-        self.conv5 = SkipBlock(16, 16, norm, grps)
+        self.conv5 = SkipBlock(16, 16, norm, grps, drop)
         self.tran2 = SkipBlock(16, 16, norm, grps, drop, down=True)
         self.conv6 = SkipBlock(16, 16, norm, grps, drop)
         self.conv7 = SkipBlock(16, 32, norm, grps, drop)
