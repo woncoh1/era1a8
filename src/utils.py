@@ -1,5 +1,13 @@
 import torch
+import torch.nn as nn
 import matplotlib.pyplot as plt
+
+
+def initialize_weights(layer: nn.Module) -> None:
+    if isinstance(layer, nn.Conv2d):
+        nn.init.xavier_uniform_(layer.weight.data)
+    elif isinstance(layer, nn.BatchNorm2d) or isinstance(layer, nn.GroupNorm):
+        nn.init.constant_(layer.weight.data, 1)
 
 
 def count_correct_predictions(
