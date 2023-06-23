@@ -10,13 +10,6 @@ def initialize_weights(layer: nn.Module) -> None:
         nn.init.constant_(layer.weight.data, 1)
 
 
-def count_correct_predictions(
-    predictions:torch.Tensor,
-    labels:torch.Tensor,
-) -> int:
-    return predictions.argmax(dim=1).eq(labels).sum().item()
-
-
 def get_incorrect_predictions(
     device:torch.device,
     loader:torch.utils.data.DataLoader,
