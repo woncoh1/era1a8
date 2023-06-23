@@ -38,6 +38,30 @@ def conv( # Convolution layer: 3x3 convolution to extract features
     )
 
 
+def last( # Prediction layer = GAP + softmax
+    i:int, # in_channels
+    o:int, # out_channels
+) -> nn.Sequential:
+    return nn.Sequential(
+        # [-1, i, s, s]
+        nn.AdaptiveAvgPool2d(output_size=1),
+        # [-1, i, 1, 1]
+        nn.Conv2d(
+            in_channels=i,
+            out_channels=o,
+            kernel_size=1,
+            stride=1,
+            padding=0,
+            bias=False,
+        ),
+        # [-1, o, 1, 1]
+        nn.Flatten(),
+        # [-1, o]
+        nn.LogSoftmax(dim=1), # https://discuss.pytorch.org/t/difference-between-cross-entropy-loss-or-log-likelihood-loss/38816
+        # [-1, o]
+    )
+
+
 class SkipBlock(nn.Module):
     # https://engineering.purdue.edu/DeepLearn/pdf-kak/SkipConsAndBN.pdf
     # https://engineering.purdue.edu/kak/distDLS/DLStudio-2.3.0_CodeOnly.html
