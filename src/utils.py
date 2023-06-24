@@ -8,11 +8,11 @@ def initialize_weights(
 ) -> None:
     """Randomly initialize weights.
     https://github.com/parrotletml/era_session_seven/blob/main/mnist/utils.py#L51-L63
+    https://adityassrana.github.io/blog/theory/2020/08/26/Weight-Init.html#Weight-Initialization:-Residual-Networks
     """
     if isinstance(layer, nn.Conv2d):
-        nn.init.xavier_uniform_(layer.weight.data)
-        if layer.bias is not None: nn.init.constant_(layer.bias.data, 0)
-    elif isinstance(layer, nn.BatchNorm2d) or isinstance(layer, nn.GroupNorm):
+        nn.init.kaiming_normal_(layer.weight.data, mode='fan_out', nonlinearity='relu')
+    elif isinstance(layer, (nn.BatchNorm2d, nn.GroupNorm)):
         nn.init.constant_(layer.weight.data, 1)
         nn.init.constant_(layer.bias.data, 0)
 
