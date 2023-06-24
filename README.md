@@ -26,9 +26,9 @@ Use batch, layer, and group normalization to achieve all the followings:
 
 ## Results summary
 - Test accuracy
-    - Batch: ? % 
+    - Batch: 79.69 % 
     - Layer: ? %
-    - Group: ? %
+    - Group: 70.75 %
 - Number of Parameters: 48,712
 - Number of Epochs: 20
 
