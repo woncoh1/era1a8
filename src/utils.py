@@ -12,6 +12,7 @@ def initialize_weights(
     """
     if isinstance(layer, nn.Conv2d):
         nn.init.kaiming_normal_(layer.weight.data, mode='fan_out', nonlinearity='relu')
+        if layer.bias.data is not None: nn.init.constant_(layer.bias.data, 0)
     elif isinstance(layer, (nn.BatchNorm2d, nn.GroupNorm)):
         nn.init.constant_(layer.weight.data, 1)
         nn.init.constant_(layer.bias.data, 0)
