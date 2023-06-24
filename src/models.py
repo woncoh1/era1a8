@@ -23,7 +23,7 @@ def conv( # Convolution layer: 3x3 convolution to extract features
     p:int=1, # padding
 ) -> nn.Sequential:
     return nn.Sequential(
-        nn.Conv2d(i, o, 3, stride=1, padding=p),
+        nn.Conv2d(i, o, 3, stride=1, padding=p, padding_mode='replicate', bias=False),
         norm(n, o, g=g),
         nn.Dropout2d(p=d),
         nn.ReLU(),
@@ -38,7 +38,7 @@ def last( # Prediction layer = GAP + softmax
         # [-1, i, s, s]
         nn.AdaptiveAvgPool2d(output_size=1),
         # [-1, i, 1, 1]
-        nn.Conv2d(i, o, 1, stride=1),
+        nn.Conv2d(i, o, 1, stride=1, bias=False),
         # [-1, o, 1, 1]
         nn.Flatten(),
         # [-1, o]
