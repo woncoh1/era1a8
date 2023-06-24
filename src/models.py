@@ -30,7 +30,7 @@ def conv( # Convolution layer: 3x3 convolution to extract features
             stride=1,
             padding=p,
             padding_mode='replicate',
-            bias=False,
+            bias=True,
         ),
         norm(n, o, g=g),
         nn.Dropout2d(p=d),
@@ -52,7 +52,7 @@ def last( # Prediction layer = GAP + softmax
             kernel_size=1,
             stride=1,
             padding=0,
-            bias=False,
+            bias=True,
         ),
         # [-1, o, 1, 1]
         nn.Flatten(),
@@ -79,14 +79,14 @@ class SkipBlock(nn.Module):
         self.skip = skip
         self.i = i
         self.o = o
-        self.conv1 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate', bias=False)
-        self.conv2 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate', bias=False)
+        self.conv1 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate', bias=True)
+        self.conv2 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate', bias=True)
         self.norm1 = norm(n, o, g=g)
         self.norm2 = norm(n, o, g=g)
         self.drop1 = nn.Dropout2d(p=d)
         self.drop2 = nn.Dropout2d(p=d)
         if down:
-            self.downsampler = nn.Conv2d(i, o, 1, stride=2, bias=False)
+            self.downsampler = nn.Conv2d(i, o, 1, stride=2, bias=True)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         identity = x
