@@ -23,7 +23,7 @@ def conv( # Convolution layer: 3x3 convolution to extract features
     p:int=1, # padding
 ) -> nn.Sequential:
     return nn.Sequential(
-        nn.Conv2d(i, o, 3, stride=1, padding=p, padding_mode='replicate'),
+        nn.Conv2d(i, o, 3, stride=1, padding=p, padding_mode='replicate', bias=False),
         norm(n, o, g=g),
         nn.Dropout2d(p=d),
         nn.ReLU(),
@@ -38,7 +38,7 @@ def last( # Prediction layer = GAP + softmax
         # [-1, i, s, s]
         nn.AdaptiveAvgPool2d(output_size=1),
         # [-1, i, 1, 1]
-        nn.Conv2d(i, o, 1, stride=1),
+        nn.Conv2d(i, o, 1, stride=1, bias=False),
         # [-1, o, 1, 1]
         nn.Flatten(),
         # [-1, o]
@@ -64,14 +64,14 @@ class SkipBlock(nn.Module):
         self.skip = skip
         self.i = i
         self.o = o
-        self.conv1 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate')
-        self.conv2 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate')
+        self.conv1 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate', bias=False)
+        self.conv2 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate', bias=False)
         self.norm1 = norm(n, o, g=g)
         self.norm2 = norm(n, o, g=g)
         self.drop1 = nn.Dropout2d(p=d)
         self.drop2 = nn.Dropout2d(p=d)
         if down:
-            self.downsampler = nn.Conv2d(i, o, 1, stride=2)
+            self.downsampler = nn.Conv2d(i, o, 1, stride=2, bias=False)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         identity = x
