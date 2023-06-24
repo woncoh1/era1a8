@@ -13,9 +13,9 @@ def initialize_weights(
     if isinstance(layer, nn.Conv2d):
         nn.init.xavier_uniform_(layer.weight.data)
         if layer.bias is not None: nn.init.constant_(layer.bias.data, 0)
-    elif isinstance(layer, (nn.BatchNorm2d, nn.GroupNorm)):
-        nn.init.constant_(layer.weight.data, 1)
-        nn.init.constant_(layer.bias.data, 0)
+    # elif isinstance(layer, (nn.BatchNorm2d, nn.GroupNorm)):
+    #     nn.init.constant_(layer.weight.data, 1)
+    #     nn.init.constant_(layer.bias.data, 0)
 
 
 def get_incorrect_predictions(
