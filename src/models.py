@@ -79,8 +79,8 @@ class SkipBlock(nn.Module):
         self.skip = skip
         self.i = i
         self.o = o
-        self.conv1 = nn.Conv2d(i, o, 3, stride=1, padding=1, bias=False)
-        self.conv2 = nn.Conv2d(i, o, 3, stride=1, padding=1, bias=False)
+        self.conv1 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate', bias=False)
+        self.conv2 = nn.Conv2d(i, o, 3, stride=1, padding=1, padding_mode='replicate', bias=False)
         self.norm1 = norm(n, o, g=g)
         self.norm2 = norm(n, o, g=g)
         self.drop1 = nn.Dropout2d(p=d)
