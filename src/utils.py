@@ -11,7 +11,7 @@ def initialize_weights(
     https://adityassrana.github.io/blog/theory/2020/08/26/Weight-Init.html#Weight-Initialization:-Residual-Networks
     """
     if isinstance(layer, nn.Conv2d):
-        nn.init.kaiming_constant_(layer.weight.data, nonlinearity='relu')
+        nn.init.kaiming_uniform_(layer.weight.data, nonlinearity='relu')
         if layer.bias.data is not None: nn.init.constant_(layer.bias.data, 0)
     elif isinstance(layer, (nn.BatchNorm2d, nn.GroupNorm)):
         nn.init.constant_(layer.weight.data, 1)
