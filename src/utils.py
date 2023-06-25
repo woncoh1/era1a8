@@ -4,18 +4,16 @@ import matplotlib.pyplot as plt
 
 
 def initialize_weights(
-    layer: nn.Module,
+    m: nn.Module
 ) -> None:
-    """Randomly initialize weights.
-    https://github.com/parrotletml/era_session_seven/blob/main/mnist/utils.py#L51-L63
-    https://adityassrana.github.io/blog/theory/2020/08/26/Weight-Init.html#Weight-Initialization:-Residual-Networks
+    """Initialize weights of convolution and normalization layers.
+    https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py#L208-L213
     """
-    # if isinstance(layer, nn.Conv2d):
-    #     nn.init.xavier_uniform_(layer.weight.data)
-    #     if layer.bias is not None: nn.init.constant_(layer.bias.data, 0)
-    if isinstance(layer, (nn.BatchNorm2d, nn.GroupNorm)):
-        nn.init.constant_(layer.weight.data, 1)
-        nn.init.constant_(layer.bias.data, 0)
+    if isinstance(m, nn.Conv2d):
+        nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+    elif isinstance(m, nn.BatchNorm2d) or isinstance(m, nn.GroupNorm):
+        nn.init.constant_(m.weight, 1)
+        nn.init.constant_(m.bias, 0)
 
 
 def get_incorrect_predictions(
@@ -46,7 +44,7 @@ def get_incorrect_predictions(
     return incorrects
 
 
-def find_lr(
+def find_learning_rates(
     device:torch.device,
     train_loader:torch.utils.data.DataLoader,
     model:torch.nn.Module,
@@ -100,7 +98,7 @@ def find_lr(
     return lrs, losses
 
 
-def plot_batch(
+def plot_batch_samples(
     dataloader: torch.utils.data.DataLoader,
 ) -> None:
     """Plot sample images from a batch."""
@@ -115,7 +113,7 @@ def plot_batch(
         plt.yticks([])
 
 
-def plot_lr(
+def plot_learning_rates(
     lrs:list[float],
     losses:list[float],
 ) -> None:
@@ -137,7 +135,7 @@ def plot_lr(
     plt.show()
 
 
-def plot_curves(
+def plot_learning_curves(
     results: dict[str, list[float]],
     epoch:int,
 ) -> None:
@@ -165,7 +163,7 @@ def plot_curves(
 
 def plot_incorrect_predictions(
     predictions:list,
-    classes:list,
+    classes:list[str],
     count:int=10,
 ) -> None:
     """Plot incorrect predictions.
