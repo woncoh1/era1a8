@@ -21,8 +21,8 @@ Use batch, layer, and group normalization to achieve all the followings:
 
 ## Experiments
 1. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a8/blob/main/nbs/S8_BN.ipynb) Batch normalization
-2. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a8/blob/main/nbs/S8_LN.ipynb) Layer normalization
-3. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a8/blob/main/nbs/S8_GN.ipynb) Group normalization
+2. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a8/blob/main/nbs/S8_GN.ipynb) Group normalization
+3. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/woncoh1/era1a8/blob/main/nbs/S8_LN.ipynb) Layer normalization
 
 ## Results summary
 - Test accuracy
