@@ -107,13 +107,16 @@ class Net(nn.Module):
         self.tran3 = predblock(32, 10)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # Block 1: edges, gradients, textures, and patterns
         x = self.conv1(x)
         x = self.conv2(x)
         x = self.tran1(x)
+        # Block 2: parts of objects
         x = self.conv3(x)
         x = self.conv4(x)
         x = self.conv5(x)
         x = self.tran2(x)
+        # Block 3: objects
         x = self.conv6(x)
         x = self.conv7(x)
         x = self.conv8(x)
